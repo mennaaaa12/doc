@@ -10,35 +10,42 @@ import 'package:newapp/Features/login/logic/cubit/login_state.dart';
 class LoginBlockListener extends StatelessWidget {
   const LoginBlockListener({super.key});
 
+ 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginCubit,LoginState>(
-      listenWhen: (previous, current) => current is Loading || current is Error || current is Success, 
-    listener: (context, state) {
+    return BlocListener<LoginCubit, LoginState>(
+      listenWhen:(previous, current) {
+      return  current is Loading || current is Error || current is Success;
+      },
+      listener: (context, state) {
+        // TODO: implement listener
         state.whenOrNull(
           loading: () {
-            showDialog(
-              context: context,
-              builder: (context) => const Center(
+            showDialog(context: context, builder: (context) {
+              return const Center(
                 child: CircularProgressIndicator(
                   color: ColorManger.mainblue,
                 ),
-              ),
-            );
-          },
-          success: (loginResponse) {
+              );
+            });
+
+        },
+            failure: (error) {
             context.pop();
-            context.pushNamed(Routes.homeScreen);
-          },
-          error: (error) {
             setupErrorState(context, error);
-          },
+        },
+        success: (LoginResponse) {
+        context.pop();
+        context.pushNamed(Routes.homeScreen);
+        }
+
+
         );
       },
       child: SizedBox.shrink(),
-      );
+    );
   }
-   void setupErrorState(BuildContext context, String error) {
+  void setupErrorState(BuildContext context, String error) {
     context.pop();
     showDialog(
       context: context,

@@ -4,25 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newapp/Core/helpers/space.dart';
 import 'package:newapp/Core/theming/style.dart';
 import 'package:newapp/Core/widgets/app_text_button.dart';
-import 'package:newapp/Core/widgets/app_text_form_field.dart';
 import 'package:newapp/Core/widgets/login_block_listener.dart';
+import 'package:newapp/Features/login/data/models/login_request_body.dart';
 import 'package:newapp/Features/login/logic/cubit/login_cubit.dart';
-import 'package:newapp/Features/login/ui/widgets/Icons_google_fb_apple.dart';
 import 'package:newapp/Features/login/ui/widgets/already_have_acc_tec=xt.dart';
+import 'package:newapp/Features/login/ui/widgets/icons_google_fb_apple.dart';  // Corrected the import
 import 'package:newapp/Features/login/ui/widgets/divider.dart';
 import 'package:newapp/Features/login/ui/widgets/email_and_pass.dart';
 import 'package:newapp/Features/login/ui/widgets/terms_and_conditions.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
-  bool isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +54,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       buttonText: 'Login',
                       textStyle: TextStyles.font16WhiteSemiBold,
                       onPressed: () {
-                        validateThenDoLogin(context);
+                        validateThenDoLogin(context);  // Corrected method name
                       },
                     ),
                     verticalspace(60),
                     const divider(),
                     verticalspace(60),
-                    const Icons_google_fb_apple(),
+                    const Icons_google_fb_apple(),  // Corrected widget name
                     verticalspace(60),
                     const TermsAndConditionsText(),
                     verticalspace(30),
                     const DontHaveAccountText(),
-                    const LoginBlockListener()
+                    const LoginBlockListener()  // Corrected widget name
                   ],
                 ),
               ],
@@ -81,11 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  
-  void validateThenDoLogin(BuildContext context) {
-    if(context.read<LoginCubit>().formKey.currentState!.validate()){
-      context.read<LoginCubit>().emitLoginStates();
+
+  void validateThenDoLogin(BuildContext context) {  // Corrected method name
+    if (formKey.currentState!.validate()) {
+      context.read<LoginCubit>().emitLoginState(LoginRequestBody(
+        email: context.read<LoginCubit>().emailController.text,
+        password: context.read<LoginCubit>().passwordController.text,
+      ));
     }
   }
 }
-

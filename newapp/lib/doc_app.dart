@@ -5,7 +5,7 @@ import 'package:newapp/Core/routing/routes.dart';
 import 'package:newapp/Core/theming/colors.dart';
 
 class DocApp extends StatelessWidget {
-  final AppRoute appRoute ;
+  final AppRouter appRoute ;
   const DocApp({super.key,required this.appRoute});
 
   @override

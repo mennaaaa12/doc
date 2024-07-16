@@ -5,6 +5,6 @@ import 'package:newapp/doc_app.dart';
 
 void main() {
   setupGetIt();
-  runApp( DocApp( appRoute: AppRoute()));
+  runApp( DocApp( appRoute: AppRouter()));
 }
 
