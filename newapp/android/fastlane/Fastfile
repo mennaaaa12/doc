@@ -1,0 +1,21 @@
+platform :android do
+  desc "Lane for Android Firebase App Distribution"
+  lane :firebase_distribution do
+    begin
+      sh "flutter clean"
+      sh "flutter build apk --flavor Production -t lib/main_production.dart --verbose"
+      
+      firebase_app_distribution(
+        app: "1:432108460260:android:edc87f823bf6fff4aff4f1",
+        firebase_cli_token: ENV("FIREBASE_CLI_TOKEN"),
+        android_artifact_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
+        testers: "mennashady7@gmail.com",
+        release_notes: "First Fastlane Firebase Distribution",
+        debug: true  # Enable debug mode for more verbose logging
+      )
+    rescue => ex
+      UI.error("An error occurred: #{ex.message}")
+      UI.user_error!("Build and distribution failed!")
+    end
+  end
+end
