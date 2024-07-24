@@ -7,5 +7,6 @@ void main() {
   setupGetIt();
   runApp( DocApp( appRoute: AppRouter()));
   //jkhkjhjkhjhkj
+  ///rsere
 }
 
