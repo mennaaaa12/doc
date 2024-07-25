@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newapp/Core/di/dependency_injection.dart';
 import 'package:newapp/Core/helpers/constans.dart';
 import 'package:newapp/Core/helpers/shared_prefrence_helper.dart';
-import 'package:newapp/Features/home/logic/home_cubit.dart';
-import 'package:newapp/Features/home/ui/home_screen.dart';
+import 'package:newapp/Core/routing/app_route.dart';
+import 'package:newapp/Core/routing/routes.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupGetIt();
-    await checkedInIfUserIsLoggedIn();
-  runApp(const MyApp());
+  await checkedInIfUserIsLoggedIn();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppRouter _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +27,15 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: BlocProvider(
-            create: (_) => getIt<HomeCubit>()..getSpesialization(),
-            child: const HomeScreen(),
-          ),
+          onGenerateRoute: _appRouter.generateRoute,
+          initialRoute: Routes.loginScreen,
         );
       },
     );
   }
 }
-checkedInIfUserIsLoggedIn() async {
+
+Future<void> checkedInIfUserIsLoggedIn() async {
   String userToken = await SharedPrefHelper.getSecuredString(SharedPrefKeys.userToken);
   if (!userToken.isNotEmpty) {
     isLoggedInUser = true;

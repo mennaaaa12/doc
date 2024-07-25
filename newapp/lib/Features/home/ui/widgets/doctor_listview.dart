@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:newapp/Core/helpers/space.dart';
-import 'package:newapp/Core/theming/style.dart';
 import 'package:newapp/Features/home/data/models/specialization_response_model.dart';
 import 'package:newapp/Features/home/ui/widgets/doctors_listview_item.dart';
 
